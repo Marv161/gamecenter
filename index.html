@@ -5,33 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3men2 | Game Center</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Fuentes Futuristas -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <!-- Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script>
-        // --- ESCUDO DE PROTECCIÓN BÁSICA ---
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.onkeydown = function(e) {
-            if(e.keyCode == 123) { return false; }
-            if(e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) { return false; }
-            if(e.ctrlKey && (e.keyCode == 'U'.charCodeAt(0) || e.keyCode == 'S'.charCodeAt(0))) { return false; }
+            if(e.keyCode == 123) return false;
+            if(e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 67 || e.keyCode == 74)) return false;
+            if(e.ctrlKey && (e.keyCode == 85 || e.keyCode == 83)) return false;
         }
 
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        neon: { purple: '#b026ff', blue: '#00f3ff', pink: '#ff0099', green: '#00ff9d', orange: '#ff9900', red: '#ff2a2a' },
+                        neon: { purple: '#b026ff', blue: '#00f3ff', pink: '#ff0099', green: '#00ff9d', orange: '#ff9900', red: '#ff2a2a', yellow: '#ffd700' },
                         dark: { bg: '#050510', card: '#0f1020', surface: '#1a1b2e', input: '#232442' }
                     },
                     fontFamily: {
                         orbitron: ['Orbitron', 'sans-serif'],
                         rajdhani: ['Rajdhani', 'sans-serif'],
-                        inter: ['Inter', 'sans-serif'],
                     }
                 }
             }
@@ -41,81 +37,38 @@
     <style>
         body {
             background-color: #050510;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(176, 38, 255, 0.05) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(0, 243, 255, 0.05) 0%, transparent 20%);
-            color: white;
-            overflow: hidden; 
-            height: 100vh;
-            user-select: none;
-            -webkit-user-select: none;
+            background-image: radial-gradient(circle at 10% 20%, rgba(176, 38, 255, 0.05) 0%, transparent 20%), radial-gradient(circle at 90% 80%, rgba(0, 243, 255, 0.05) 0%, transparent 20%);
+            color: white; overflow: hidden; height: 100vh; user-select: none; -webkit-user-select: none;
         }
-        
-        .cyber-card {
-            background: rgba(15, 16, 32, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .game-card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 25px var(--hover-glow);
-            border-color: var(--hover-color);
-        }
-
+        .cyber-card { background: rgba(15, 16, 32, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); position: relative; overflow: hidden; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); transition: all 0.3s ease; }
+        .game-card-hover:hover { transform: translateY(-5px); box-shadow: 0 0 25px var(--hover-glow); border-color: var(--hover-color); }
         .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
         .animate-pop { animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-
-        .dense-input {
-            background: transparent; border: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff; width: 100%; font-family: 'Rajdhani', sans-serif; font-weight: 600; padding: 0; height: 100%;
-        }
+        .dense-input { background: transparent; border: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); color: #fff; width: 100%; font-family: 'Rajdhani', sans-serif; font-weight: 600; padding: 0; height: 100%; }
         .dense-input:focus { outline: none; border-bottom-color: var(--theme-color, #00f3ff); background: rgba(255, 255, 255, 0.05); }
-
-        /* Scrollbars */
         .custom-scroll::-webkit-scrollbar { width: 4px; }
         .custom-scroll::-webkit-scrollbar-track { background: transparent; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
-
-        /* Tabs */
-        .active-tab {
-            background: rgba(255, 255, 255, 0.05);
-            border-bottom: 2px solid var(--theme-color, #00f3ff);
-            color: var(--theme-color, #00f3ff);
-            text-shadow: 0 0 8px currentColor;
-        }
+        .active-tab { background: rgba(255, 255, 255, 0.05); border-bottom: 2px solid var(--theme-color, #00f3ff); color: var(--theme-color, #00f3ff); text-shadow: 0 0 8px currentColor; }
         .inactive-tab { color: #6b7280; border-bottom: 2px solid transparent; }
         .inactive-tab:hover { color: #9ca3af; }
-
-        /* Flags */
         .flag-gradient-cv { background: linear-gradient(to right, #FFD700, #0033CC, #CE1126); }
         .flag-text-cv { background: linear-gradient(to right, #FFD700, #0033CC, #CE1126); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .flag-gradient-mx { background: linear-gradient(to right, #006847, #FFFFFF, #CE1126); }
         .flag-text-mx { background: linear-gradient(to right, #006847, #FFFFFF, #CE1126); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .text-bingo { color: #b026ff; text-shadow: 0 0 10px rgba(176, 38, 255, 0.5); }
-
-        /* Toggle Switch */
-        .toggle-checkbox:checked {
-            right: 0;
-            border-color: var(--theme-color, #00f3ff);
-        }
-        .toggle-checkbox:checked + .toggle-label {
-            background-color: var(--theme-color, #00f3ff);
-        }
+        .text-silabas { background: linear-gradient(to right, #ff9900, #ffcc00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 10px rgba(255, 153, 0, 0.3); }
+        .text-numeros { background: linear-gradient(to right, #00ff9d, #00ccff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 10px rgba(0, 255, 157, 0.3); }
+        .toggle-checkbox:checked { right: 0; border-color: var(--theme-color, #00f3ff); }
+        .toggle-checkbox:checked + .toggle-label { background-color: var(--theme-color, #00f3ff); }
     </style>
 </head>
 <body class="flex flex-col font-inter h-screen overflow-hidden">
 
-    <!-- HEADER GLOBAL -->
-    <header class="flex-none h-16 border-b border-white/10 flex items-center justify-between px-4 md:px-6 bg-dark-bg/95 z-30 shadow-lg relative">
-        <div class="flex items-center gap-4 md:gap-8">
+    <header class="flex-none h-16 border-b border-white/10 flex items-center justify-between px-4 md:px-6 bg-dark-bg/95 z-50 shadow-lg relative">
+        <div class="flex items-center gap-4">
             <div class="flex items-center gap-3 cursor-pointer group flex-none" onclick="goHome()">
                 <div class="relative">
                     <i class="fa-solid fa-dice-d20 text-white text-2xl md:text-3xl group-hover:animate-spin"></i>
@@ -126,13 +79,15 @@
                     <span class="text-[8px] md:text-[10px] text-gray-400 font-rajdhani tracking-[0.2em] uppercase">Game Center</span>
                 </div>
             </div>
-            <button id="btn-exit" onclick="goHome()" class="hidden animate-fade-in flex items-center gap-2 px-3 py-1.5 bg-red-500/10 border border-red-500/50 rounded hover:bg-red-500 hover:text-white text-red-400 transition-colors font-orbitron text-xs font-bold">
+            <button id="btn-exit" onclick="goHome()" class="hidden animate-fade-in flex items-center gap-2 px-3 py-1.5 bg-red-500/10 border border-red-500/50 rounded hover:bg-red-500 hover:text-white text-red-400 transition-colors font-orbitron text-xs font-bold z-50 pointer-events-auto">
                 <i class="fa-solid fa-power-off"></i> <span class="hidden sm:inline">SALIR</span>
             </button>
         </div>
+
         <div id="header-game-title-container" class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden lg:block text-center opacity-0 transition-opacity duration-500 pointer-events-none">
              <h2 id="header-game-title" class="font-orbitron font-black text-2xl tracking-widest uppercase filter drop-shadow-[0_0_5px_rgba(255,255,255,0.2)]"></h2>
         </div>
+
         <div class="flex items-center gap-4">
             <div id="header-tabs" class="hidden animate-fade-in flex gap-2 h-full items-center">
                 <button onclick="switchTab('play')" id="tab-play" class="active-tab px-3 md:px-4 py-2 font-orbitron font-bold text-xs md:text-sm tracking-widest transition-all flex items-center gap-2 rounded hover:bg-white/5"><i class="fa-solid fa-layer-group"></i> <span>JUGAR</span></button>
@@ -141,89 +96,90 @@
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
     <main class="flex-grow relative overflow-hidden bg-gradient-to-br from-dark-bg to-[#080a14]">
         
-        <!-- MENU -->
         <div id="view-menu" class="absolute inset-0 p-8 flex flex-col items-center justify-center transition-all duration-500 z-10 overflow-y-auto">
             <h2 class="font-orbitron text-3xl md:text-5xl mb-8 text-center text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] flex-none">SELECCIONA TU <span class="text-neon-blue">JUEGO</span></h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl w-full flex-none pb-8">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 max-w-[90rem] w-full flex-none pb-8">
+                <!-- COLO-VENECA -->
                 <button onclick="initGame('cv')" class="group relative cyber-card p-6 rounded-2xl text-left game-card-hover" style="--hover-color: #FFD700; --hover-glow: rgba(255, 215, 0, 0.3)">
                     <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity duration-500"><i class="fa-solid fa-ticket text-8xl text-yellow-500"></i></div>
                     <div class="relative z-10">
-                        <h3 class="font-orbitron text-xl font-bold mb-2 text-white">LOTERÍA <br> <span class="flag-text-cv text-2xl">COLOMBO-VENECA</span></h3>
+                        <h3 class="font-orbitron text-lg font-bold mb-2 text-white">LOTERÍA <br> <span class="flag-text-cv text-xl">COLOMBO-VENECA</span></h3>
                         <div class="h-1 w-20 bg-gradient-to-r from-yellow-400 via-blue-600 to-red-600 mb-4 rounded-full"></div>
-                        <p class="text-gray-400 font-rajdhani mb-6 text-xs h-10">Edición especial con 50 cartas culturales.</p>
-                        <span class="inline-flex items-center gap-2 text-yellow-400 font-bold font-orbitron text-xs group-hover:translate-x-2 transition-transform">JUGAR AHORA <i class="fa-solid fa-arrow-right"></i></span>
+                        <p class="text-gray-400 font-rajdhani mb-6 text-xs h-8">La lotería más chimba, chamo.</p>
+                        <span class="inline-flex items-center gap-2 text-yellow-400 font-bold font-orbitron text-xs group-hover:translate-x-2 transition-transform">JUGAR <i class="fa-solid fa-arrow-right"></i></span>
                     </div>
                 </button>
+                <!-- MEXICANA -->
                 <button onclick="initGame('mx')" class="group relative cyber-card p-6 rounded-2xl text-left game-card-hover" style="--hover-color: #006847; --hover-glow: rgba(0, 104, 71, 0.3)">
                     <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity duration-500"><i class="fa-solid fa-hat-cowboy text-8xl text-green-500"></i></div>
                     <div class="relative z-10">
-                        <h3 class="font-orbitron text-xl font-bold mb-2 text-white">LOTERÍA <br> <span class="flag-text-mx text-2xl">MEXICANA</span></h3>
+                        <h3 class="font-orbitron text-lg font-bold mb-2 text-white">LOTERÍA <br> <span class="flag-text-mx text-xl">MEXICANA</span></h3>
                         <div class="h-1 w-20 bg-gradient-to-r from-green-600 via-white to-red-600 mb-4 rounded-full"></div>
-                        <p class="text-gray-400 font-rajdhani mb-6 text-xs h-10">La clásica tradicional de 54 cartas.</p>
-                        <span class="inline-flex items-center gap-2 text-green-400 font-bold font-orbitron text-xs group-hover:translate-x-2 transition-transform">JUGAR AHORA <i class="fa-solid fa-arrow-right"></i></span>
+                        <p class="text-gray-400 font-rajdhani mb-6 text-xs h-8">La clásica tradicional de 54 cartas.</p>
+                        <span class="inline-flex items-center gap-2 text-green-400 font-bold font-orbitron text-xs group-hover:translate-x-2 transition-transform">JUGAR <i class="fa-solid fa-arrow-right"></i></span>
                     </div>
                 </button>
+                <!-- BINGO INVERTIDO -->
                 <button onclick="initGame('bingo')" class="group relative cyber-card p-6 rounded-2xl text-left game-card-hover" style="--hover-color: #b026ff; --hover-glow: rgba(176, 38, 255, 0.3)">
                     <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity duration-500"><i class="fa-solid fa-hashtag text-8xl text-neon-purple"></i></div>
                     <div class="relative z-10">
-                        <h3 class="font-orbitron text-xl font-bold mb-2 text-white">BINGO <br> <span class="text-bingo text-2xl">INVERTIDO</span></h3>
+                        <h3 class="font-orbitron text-lg font-bold mb-2 text-white">BINGO <br> <span class="text-bingo text-xl">INVERTIDO</span></h3>
                         <div class="h-1 w-20 bg-gradient-to-r from-neon-purple via-pink-500 to-blue-500 mb-4 rounded-full"></div>
-                        <p class="text-gray-400 font-rajdhani mb-6 text-xs h-10">90 números, 45 combinaciones invertidas.</p>
-                        <span class="inline-flex items-center gap-2 text-neon-purple font-bold font-orbitron text-xs group-hover:translate-x-2 transition-transform">JUGAR AHORA <i class="fa-solid fa-arrow-right"></i></span>
+                        <p class="text-gray-400 font-rajdhani mb-6 text-xs h-8">90 números, 45 combinaciones.</p>
+                        <span class="inline-flex items-center gap-2 text-neon-purple font-bold font-orbitron text-xs group-hover:translate-x-2 transition-transform">JUGAR <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </button>
+                <!-- BINGO NÚMEROS -->
+                <button onclick="initGame('numeros')" class="group relative cyber-card p-6 rounded-2xl text-left game-card-hover" style="--hover-color: #00ff9d; --hover-glow: rgba(0, 255, 157, 0.3)">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity duration-500"><i class="fa-solid fa-list-ol text-8xl text-neon-green"></i></div>
+                    <div class="relative z-10">
+                        <h3 class="font-orbitron text-lg font-bold mb-2 text-white">BINGO <br> <span class="text-numeros text-xl">NÚMEROS</span></h3>
+                        <div class="h-1 w-20 bg-gradient-to-r from-green-400 via-teal-500 to-blue-500 mb-4 rounded-full"></div>
+                        <p class="text-gray-400 font-rajdhani mb-6 text-xs h-8">100 números.</p>
+                        <span class="inline-flex items-center gap-2 text-neon-green font-bold font-orbitron text-xs group-hover:translate-x-2 transition-transform">JUGAR <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </button>
+                <!-- SÍLABAS -->
+                <button onclick="initGame('silabas')" class="group relative cyber-card p-6 rounded-2xl text-left game-card-hover" style="--hover-color: #ff9900; --hover-glow: rgba(255, 153, 0, 0.3)">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity duration-500"><i class="fa-solid fa-font text-8xl text-neon-orange"></i></div>
+                    <div class="relative z-10">
+                        <h3 class="font-orbitron text-lg font-bold mb-2 text-white">LOTERÍA <br> <span class="text-silabas text-xl">SÍLABAS</span></h3>
+                        <div class="h-1 w-20 bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 mb-4 rounded-full"></div>
+                        <p class="text-gray-400 font-rajdhani mb-6 text-xs h-8">104 sílabas</p>
+                        <span class="inline-flex items-center gap-2 text-neon-orange font-bold font-orbitron text-xs group-hover:translate-x-2 transition-transform">JUGAR <i class="fa-solid fa-arrow-right"></i></span>
                     </div>
                 </button>
             </div>
         </div>
 
-        <!-- GAME ENGINE -->
         <div id="view-game" class="absolute inset-0 hidden flex-col animate-fade-in transition-opacity duration-300 z-20 bg-dark-bg">
             <div class="flex lg:hidden justify-center py-2 bg-dark-card border-b border-white/5">
                  <h2 id="mobile-game-title" class="font-orbitron text-sm font-bold tracking-widest uppercase">JUEGO</h2>
             </div>
 
             <div class="flex-grow relative overflow-hidden p-2 md:p-4">
-                
-                <!-- PLAY AREA -->
                 <div id="area-play" class="absolute inset-2 md:inset-4 flex flex-col md:flex-row gap-4 transition-all duration-300">
-                    
-                    <!-- IZQUIERDA: CARTA/NÚMERO -->
                     <div id="left-panel" class="w-full md:w-[60%] flex-none flex flex-col gap-3 h-full transition-all duration-300">
-                        
                         <div class="cyber-card w-full flex-grow relative group shadow-lg flex flex-col">
                             <div id="card-header-line" class="absolute top-0 w-full h-1 opacity-80"></div>
-                            
-                            <div id="card-display" class="flex-grow flex flex-col items-center justify-center p-6 bg-gradient-to-b from-dark-card to-dark-bg/90">
-                                <!-- Dynamic Content -->
-                            </div>
+                            <div id="card-display" class="flex-grow flex flex-col items-center justify-center p-6 bg-gradient-to-b from-dark-card to-dark-bg/90"></div>
                         </div>
-
-                        <!-- Info & Controls -->
                         <div class="flex-none space-y-2">
-                            
-                            <!-- Barra Estado & Autocopia -->
                             <div class="flex justify-between items-center w-full px-3 font-rajdhani font-bold text-sm bg-dark-card/30 rounded py-2 border border-white/5">
                                 <span class="text-gray-400 text-[10px] md:text-xs">RESTAN: <span id="count-rem" class="text-white">0</span></span>
-                                
-                                <div class="flex items-center gap-2">
-                                    <div class="flex items-center gap-2 mr-2 border-r border-white/10 pr-2">
-                                        <label for="autocopy-toggle" class="text-[9px] text-gray-400 uppercase cursor-pointer hover:text-white transition-colors">Auto Copiar</label>
-                                        <div class="relative inline-block w-8 h-4 align-middle select-none transition duration-200 ease-in">
-                                            <input type="checkbox" name="autocopy" id="autocopy-toggle" class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-4 appearance-none cursor-pointer" onchange="toggleAutoCopy()"/>
-                                            <label for="autocopy-toggle" class="toggle-label block overflow-hidden h-4 rounded-full bg-gray-700 cursor-pointer"></label>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center gap-1 text-neon-blue font-orbitron font-bold">
-                                        <i class="fa-regular fa-clock text-[10px]"></i>
-                                        <span id="game-clock" class="text-sm">00:00</span>
+                                <div class="flex items-center gap-2 border-l border-r border-white/10 px-2 mx-1">
+                                    <label for="autocopy-toggle" class="text-[9px] text-gray-400 uppercase cursor-pointer hover:text-white transition-colors">Auto Copiar</label>
+                                    <div class="relative inline-block w-8 h-4 align-middle select-none">
+                                        <input type="checkbox" name="autocopy" id="autocopy-toggle" class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-4 appearance-none cursor-pointer" onchange="toggleAutoCopy()"/>
+                                        <label for="autocopy-toggle" class="toggle-label block overflow-hidden h-4 rounded-full bg-gray-700 cursor-pointer"></label>
                                     </div>
                                 </div>
-
+                                <div class="flex items-center gap-1 text-neon-blue font-orbitron font-bold"><i class="fa-regular fa-clock text-[10px]"></i><span id="game-clock" class="text-sm">00:00</span></div>
                                 <span class="text-gray-400 text-[10px] md:text-xs">SALIERON: <span id="count-drawn" class="text-white">0</span></span>
                             </div>
-
                             <div class="bg-dark-card/50 p-3 rounded-xl border border-white/5">
                                 <div class="flex items-center justify-between mb-2">
                                     <span class="text-gray-500 font-rajdhani text-xs uppercase">Intervalo</span>
@@ -234,76 +190,45 @@
                                         <option value="5">5s (Lento)</option>
                                     </select>
                                 </div>
-
                                 <div class="grid grid-cols-2 gap-2 mb-2">
-                                    <button onclick="toggleAuto()" id="btn-auto" class="bg-white/5 border border-white/10 text-white hover:bg-white/10 py-2 rounded-lg font-orbitron font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-lg cyber-btn">
-                                        <i class="fa-solid fa-play"></i> AUTO
-                                    </button>
-                                    <button onclick="drawCard()" id="btn-manual" class="bg-white/5 border border-white/10 text-white hover:bg-white/10 py-2 rounded-lg font-orbitron font-bold text-xs transition-all flex items-center justify-center gap-2 cyber-btn">
-                                        <i class="fa-solid fa-forward"></i> MANUAL
-                                    </button>
+                                    <button onclick="toggleAuto()" id="btn-auto" class="bg-white/5 border border-white/10 text-white hover:bg-white/10 py-2 rounded-lg font-orbitron font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-lg cyber-btn"><i class="fa-solid fa-play"></i> AUTO</button>
+                                    <button onclick="drawCard()" id="btn-manual" class="bg-white/5 border border-white/10 text-white hover:bg-white/10 py-2 rounded-lg font-orbitron font-bold text-xs transition-all flex items-center justify-center gap-2 cyber-btn"><i class="fa-solid fa-forward"></i> MANUAL</button>
                                 </div>
-
                                 <div class="grid grid-cols-2 gap-2">
-                                    <button onclick="toggleChat()" id="btn-chat" class="py-2 text-[10px] bg-blue-600 text-white rounded-lg font-orbitron tracking-widest font-bold transition-all flex items-center justify-center gap-2 shadow-lg hover:bg-blue-500">
-                                        <i class="fa-regular fa-comments"></i> VER XAT
-                                    </button>
-                                    <button onclick="resetGame()" class="py-2 text-[10px] bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white rounded-lg font-orbitron tracking-widest font-bold transition-all flex items-center justify-center gap-2 border border-red-500/20">
-                                        <i class="fa-solid fa-rotate-left"></i> REINICIAR
-                                    </button>
+                                    <button onclick="toggleChat()" id="btn-chat" class="py-2 text-[10px] bg-blue-600 text-white rounded-lg font-orbitron tracking-widest font-bold transition-all flex items-center justify-center gap-2 shadow-lg hover:bg-blue-500"><i class="fa-regular fa-comments"></i> VER XAT</button>
+                                    <button onclick="resetGame()" class="py-2 text-[10px] bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white rounded-lg font-orbitron tracking-widest font-bold transition-all flex items-center justify-center gap-2 border border-red-500/20"><i class="fa-solid fa-rotate-left"></i> REINICIAR</button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- CENTRO: HISTORIAL (Tablero) -->
                     <div id="right-panel" class="flex-grow flex flex-col h-full overflow-hidden transition-all duration-300">
                         <div class="cyber-card flex-grow rounded-2xl border border-white/10 flex flex-col h-full bg-dark-card/40 relative">
-                            <!-- Overlay para volver a mostrar si está oculto -->
                             <div id="show-history-overlay" class="hidden absolute inset-0 bg-dark-bg/80 backdrop-blur-sm z-50 flex items-center justify-center cursor-pointer hover:bg-dark-bg/60 transition-all" onclick="toggleHistory()">
-                                <button class="bg-neon-blue/20 border border-neon-blue text-neon-blue px-4 py-2 rounded-full font-orbitron font-bold text-xs hover:bg-neon-blue hover:text-black transition-all">
-                                    <i class="fa-regular fa-eye"></i> MOSTRAR HISTORIAL
-                                </button>
+                                <button class="bg-neon-blue/20 border border-neon-blue text-neon-blue px-4 py-2 rounded-full font-orbitron font-bold text-xs hover:bg-neon-blue hover:text-black transition-all"><i class="fa-regular fa-eye"></i> MOSTRAR HISTORIAL</button>
                             </div>
-
                             <div class="flex items-center justify-between px-4 py-3 border-b border-white/5 flex-none bg-dark-card/50">
-                                <h3 id="board-title" class="font-orbitron text-gray-300 tracking-widest text-sm flex items-center gap-2">
-                                    <i class="fa-solid fa-list-check"></i> HISTORIAL
-                                    <button onclick="toggleHistory()" class="ml-2 text-neon-blue hover:text-white transition-colors" title="Ocultar/Mostrar Historial">
-                                        <i class="fa-regular fa-eye" id="icon-eye"></i>
-                                    </button>
-                                </h3>
+                                <h3 id="board-title" class="font-orbitron text-gray-300 tracking-widest text-sm flex items-center gap-2"><i class="fa-solid fa-list-check"></i> HISTORIAL <button onclick="toggleHistory()" class="ml-2 text-neon-blue hover:text-white transition-colors"><i class="fa-regular fa-eye" id="icon-eye"></i></button></h3>
                                 <span class="text-[10px] bg-dark-bg px-2 py-1 rounded border border-white/10 text-gray-400 font-mono flex items-center gap-1">ÚLTIMA: <span id="last-card-name" class="text-white font-bold max-w-[80px] truncate block">-</span></span>
                             </div>
                             <div id="board-container" class="flex-grow p-2 overflow-hidden flex flex-col justify-center"></div>
                         </div>
                     </div>
 
-                    <!-- DERECHA: CHAT (Oculto por defecto) -->
                     <div id="chat-panel" class="w-[30%] flex-none hidden flex-col h-full overflow-hidden transition-all duration-300">
                         <div class="cyber-card flex-grow rounded-2xl border border-neon-blue/50 flex flex-col h-full bg-black">
                             <div class="flex items-center justify-between px-4 py-2 border-b border-neon-blue/30 bg-black/80 flex-none">
                                 <h3 class="font-orbitron text-neon-blue text-sm flex items-center gap-2"><i class="fa-solid fa-comments"></i> XAT</h3>
                                 <button onclick="toggleChat()" class="text-red-500 hover:text-white"><i class="fa-solid fa-times"></i></button>
                             </div>
-                            <div id="chat-frame-container" class="flex-grow bg-white">
-                                <!-- Iframe injected here -->
-                            </div>
+                            <div id="chat-frame-container" class="flex-grow bg-white"></div>
                         </div>
                     </div>
-
                 </div>
 
-                <!-- LISTA PARTICIPANTES -->
                 <div id="area-list" class="absolute inset-4 hidden flex-col transition-all duration-300">
                     <div class="flex justify-between items-center mb-3 flex-none">
-                        <div class="flex items-center gap-4">
-                            <h2 class="font-orbitron text-white text-lg tracking-wider">REGISTRO</h2>
-                            <div class="flex items-center gap-3 text-xs font-rajdhani text-gray-400 border-l border-white/10 pl-4">
-                               <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-gray-600"></span> Pendiente</div>
-                               <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-neon-green shadow-[0_0_5px_#00ff9d]"></span> ¡Ganadora!</div>
-                           </div>
-                        </div>
+                        <div class="flex items-center gap-4"><h2 class="font-orbitron text-white text-lg tracking-wider">REGISTRO</h2></div>
                         <button onclick="clearParticipants()" class="text-xs text-neon-red hover:text-white border border-neon-red/50 hover:bg-neon-red px-3 py-1 rounded transition-colors uppercase font-bold tracking-wide"><i class="fa-solid fa-trash mr-1"></i> Limpiar Tabla</button>
                     </div>
                     <div id="participants-grid" class="flex-grow bg-dark-surface/50 rounded-xl border border-white/5 backdrop-blur-sm shadow-inner p-2 overflow-hidden flex flex-col justify-center"></div>
@@ -312,123 +237,93 @@
         </div>
     </main>
 
-    <!-- JS GLOBAL LOGIC -->
     <script>
-        // DATA
-        const DATA_CV = [
-            { id: 1, name: "Arepa" }, { id: 2, name: "Tequeño" }, { id: 3, name: "Malta" }, { id: 4, name: "Pirulin" }, { id: 5, name: "Samba" }, { id: 6, name: "Diablito" }, { id: 7, name: "PandeJamón" }, { id: 8, name: "Encava" }, { id: 9, name: "El Ávila" }, { id: 10, name: "Cachapa" },
+        const DATA_CV = [ { id: 1, name: "Arepa" }, { id: 2, name: "Tequeño" }, { id: 3, name: "Malta" }, { id: 4, name: "Pirulin" }, { id: 5, name: "Samba" }, { id: 6, name: "Diablito" }, { id: 7, name: "PandeJamón" }, { id: 8, name: "Encava" }, { id: 9, name: "El Ávila" }, { id: 10, name: "Cachapa" },
             { id: 11, name: "Patilla" }, { id: 12, name: "Jojoto" }, { id: 13, name: "Conflei" }, { id: 14, name: "Bollito" }, { id: 15, name: "Caraota" }, { id: 16, name: "Nutrichicha" }, { id: 17, name: "Mototaxi" }, { id: 18, name: "Cotillón" }, { id: 19, name: "Chavista" }, { id: 20, name: "Savoy" },
             { id: 21, name: "Magallanes" }, { id: 22, name: "Leones" }, { id: 23, name: "Flips" }, { id: 24, name: "Morrocoy" }, { id: 25, name: "Chicha" }, { id: 26, name: "Hallaca" }, { id: 27, name: "Rappi" }, { id: 28, name: "Bandeja Paisa" }, { id: 29, name: "Arepa de choclo" }, { id: 30, name: "Gonorrea" },
             { id: 31, name: "Petrista" }, { id: 32, name: "Uribista" }, { id: 33, name: "Aguardiente" }, { id: 34, name: "Veneco" }, { id: 35, name: "Perico" }, { id: 36, name: "Chocoramo" }, { id: 37, name: "Empanada" }, { id: 38, name: "Parcero" }, { id: 39, name: "Mecato" }, { id: 40, name: "Guayabo" },
-            { id: 41, name: "Camello" }, { id: 42, name: "Chimba" }, { id: 43, name: "Melo" }, { id: 44, name: "Pola" }, { id: 45, name: "Lechona" }, { id: 46, name: "Farra" }, { id: 47, name: "Tussi" }, { id: 48, name: "Entuque" }, { id: 49, name: "Tombo" }, { id: 50, name: "Chamo" }
-        ];
-        const DATA_MX = [
-            "El Gallo", "El Diablito", "La Dama", "El Catrín", "El Paraguas", "La Sirena", "La Escalera", "La Botella", "El Barril", "El Árbol", "El Melón", "El Valiente", "El Gorrito", "La Muerte", "La Pera", "La Bandera", "El Bandolón", "El Violoncello", "La Garza", "El Pájaro",
+            { id: 41, name: "Camello" }, { id: 42, name: "Chimba" }, { id: 43, name: "Melo" }, { id: 44, name: "Pola" }, { id: 45, name: "Lechona" }, { id: 46, name: "Farra" }, { id: 47, name: "Tussi" }, { id: 48, name: "Entuque" }, { id: 49, name: "Tombo" }, { id: 50, name: "Chamo" } ];
+        const DATA_MX = [ "El Gallo", "El Diablito", "La Dama", "El Catrín", "El Paraguas", "La Sirena", "La Escalera", "La Botella", "El Barril", "El Árbol", "El Melón", "El Valiente", "El Gorrito", "La Muerte", "La Pera", "La Bandera", "El Bandolón", "El Violoncello", "La Garza", "El Pájaro",
             "La Mano", "La Bota", "La Luna", "El Cotorro", "El Borracho", "El Negrito", "El Corazón", "La Sandía", "El Tambor", "El Camarón", "Las Jaras", "El Músico", "La Araña", "El Soldado", "La Estrella", "El Cazo", "El Mundo", "El Apache", "El Nopal", "El Alacrán",
-            "La Rosa", "La Calavera", "La Campana", "El Cantarito", "El Venado", "El Sol", "La Corona", "La Chalupa", "El Pino", "El Pescado", "La Palma", "La Maceta", "El Arpa", "La Rana"
-        ].map((name, index) => ({ id: index + 1, name: name }));
+            "La Rosa", "La Calavera", "La Campana", "El Cantarito", "El Venado", "El Sol", "La Corona", "La Chalupa", "El Pino", "El Pescado", "La Palma", "La Maceta", "El Arpa", "La Rana" ].map((name, index) => ({ id: index + 1, name: name }));
         const DATA_BINGO_NUMBERS = Array.from({length: 90}, (_, i) => ({ id: i + 1, name: (i + 1).toString().padStart(2, '0') }));
-        const BINGO_COMBOS_LIST = [
-            '01-10', '02-20', '03-30', '04-40', '05-50', '06-60', '07-70', '08-80', '09-90', '11-22', '12-21', '13-31', '14-41', '15-51', '16-61', '17-71', '18-81', '19-29', '23-32', '24-42', '25-52', '26-62', '27-72', '28-82', '33-44', '34-43', '35-53', '36-63', '37-73', '38-83', '39-49',
-            '45-54', '46-64', '47-74', '48-84', '55-66', '56-65', '57-75', '58-85', '59-69', '67-76', '68-86', '77-88', '78-87', '79-89'
-        ];
+        const BINGO_COMBOS_LIST = [ '01-10', '02-20', '03-30', '04-40', '05-50', '06-60', '07-70', '08-80', '09-90', '11-22', '12-21', '13-31', '14-41', '15-51', '16-61', '17-71', '18-81', '19-29', '23-32', '24-42', '25-52', '26-62', '27-72', '28-82', '33-44', '34-43', '35-53', '36-63', '37-73', '38-83', '39-49', '45-54', '46-64', '47-74', '48-84', '55-66', '56-65', '57-75', '58-85', '59-69', '67-76', '68-86', '77-88', '78-87', '79-89' ];
         const DATA_BINGO_COMBOS = BINGO_COMBOS_LIST.map(pair => { const [n1, n2] = pair.split('-').map(Number); return { id: pair, name: pair, n1, n2 }; });
+        const DATA_SILABAS_FULL = [
+            "MA", "ME", "MI", "MO", "MU", "PA", "PE", "PI", "PO", "PU", 
+            "SA", "SE", "SI", "SO", "SU", "LA", "LE", "LI", "LO", "LU", 
+            "TA", "TE", "TI", "TO", "TU", "DA", "DE", "DI", "DO", "DU", 
+            "NA", "NE", "NI", "NO", "NU", "BA", "BE", "BI", "BO", "BU", 
+            "FA", "FE", "FI", "FO", "FU", "RA", "RE", "RI", "RO", "RU", 
+            "VA", "VE", "VI", "VO", "VU", "GA", "GE", "GI", "GO", "GU", 
+            "CA", "CE", "CI", "CO", "CU", "JA", "JE", "JI", "JO", "JU", 
+            "ZA", "ZE", "ZI", "ZO", "ZU", "HA", "HE", "HI", "HO", "HU", 
+            "YA", "YE", "YI", "YO", "YU", "ÑA", "ÑE", "ÑI", "ÑO", "ÑU", 
+            "CHA", "CHE", "CHI", "CHO", "CHU", "LLA", "LLE", "LLI", "LLO", "LLU", 
+            "QUE", "QUI", "GUE", "GUI"
+        ];
+        const DATA_SILABAS_OBJ = DATA_SILABAS_FULL.map((s, i) => ({ id: i + 1, name: s }));
+        const DATA_BINGO_100 = Array.from({length: 100}, (_, i) => ({ id: i + 1, name: (i + 1).toString().padStart(2, '0') }));
 
-        // STATE
-        let gameState = {
-            currentGame: null, deck: [], drawn: [], participants: {}, autoInterval: null, isAuto: false, isAutoCopy: false, chatName: '', isHistoryVisible: true,
-            config: {
+        let gameState = { currentGame: null, deck: [], drawn: [], participants: {}, autoInterval: null, isAuto: false, isAutoCopy: false, chatName: '', isHistoryVisible: true, config: {
                 cv: { type: 'loteria', themeColor: '#00f3ff', flagClass: 'flag-gradient-cv', titleClass: 'flag-text-cv', storageKey: 'loteria_cv_part', deckData: DATA_CV, participantsData: DATA_CV, icon: 'fa-certificate', title: 'COLOMBO-VENECA', copyFormat: '🫓 {NAME} 🫓' },
                 mx: { type: 'loteria', themeColor: '#00ff9d', flagClass: 'flag-gradient-mx', titleClass: 'flag-text-mx', storageKey: 'loteria_mx_part', deckData: DATA_MX, participantsData: DATA_MX, icon: 'fa-hat-cowboy', title: 'MEXICANA', copyFormat: '🤠 {NAME} 🤠' },
-                bingo: { type: 'bingo', themeColor: '#b026ff', flagClass: 'bg-gradient-to-r from-purple-500 to-blue-500', titleClass: 'text-bingo', storageKey: 'bingo_part', deckData: DATA_BINGO_NUMBERS, participantsData: DATA_BINGO_COMBOS, icon: 'fa-hashtag', title: 'INVERTIDO', copyFormat: '🎲 {NAME} 🎲' }
-            }
-        };
+                bingo: { type: 'bingo', themeColor: '#b026ff', flagClass: 'bg-gradient-to-r from-purple-500 to-blue-500', titleClass: 'text-bingo', storageKey: 'bingo_part', deckData: DATA_BINGO_NUMBERS, participantsData: DATA_BINGO_COMBOS, icon: 'fa-hashtag', title: 'INVERTIDO', copyFormat: '🎲 {NAME} 🎲' },
+                silabas: { type: 'loteria', themeColor: '#ff9900', flagClass: 'bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500', titleClass: 'text-silabas', storageKey: 'loteria_sil_part', deckData: DATA_SILABAS_OBJ, participantsData: DATA_SILABAS_OBJ, icon: 'fa-font', title: 'SÍLABAS', copyFormat: '🔤 {NAME} 🔤' },
+                numeros: { type: 'bingo_100', themeColor: '#00ff9d', flagClass: 'bg-gradient-to-r from-green-400 via-teal-500 to-blue-500', titleClass: 'text-numeros', storageKey: 'bingo_num_part', deckData: DATA_BINGO_100, participantsData: DATA_BINGO_100, icon: 'fa-list-ol', title: 'NÚMEROS', copyFormat: '🔢 {NAME} 🔢' }
+        }};
 
-        // NAVIGATION
         function goHome() {
-            stopAuto();
-            closeChat();
-            ['view-menu','view-game','btn-exit','header-tabs','header-game-title-container'].forEach(id => {
-                const el = document.getElementById(id);
-                if(id==='view-menu') { el.classList.remove('hidden'); el.classList.add('flex'); }
-                else if(id==='view-game') { el.classList.add('hidden'); el.classList.remove('flex'); }
-                else { el.classList.add('hidden'); if(id==='header-game-title-container') el.classList.add('opacity-0'); }
-            });
+            stopAuto(); closeChat();
+            document.getElementById('view-menu').classList.remove('hidden'); document.getElementById('view-menu').classList.add('flex');
+            document.getElementById('view-game').classList.add('hidden'); document.getElementById('view-game').classList.remove('flex');
+            ['btn-exit','header-tabs','header-game-title-container'].forEach(id => { const el=document.getElementById(id); el.classList.add('hidden'); if(id==='header-game-title-container') el.classList.add('opacity-0'); });
             document.documentElement.style.setProperty('--theme-color', '#00f3ff');
         }
 
         function initGame(type) {
-            gameState.currentGame = type;
-            const config = gameState.config[type];
+            gameState.currentGame = type; const config = gameState.config[type];
             gameState.participants = JSON.parse(localStorage.getItem(config.storageKey)) || {};
             document.documentElement.style.setProperty('--theme-color', config.themeColor);
             
-            document.getElementById('header-game-title').innerHTML = `${config.type==='bingo'?'BINGO':'LOTERÍA'} <span class="${config.titleClass}">${config.title}</span>`;
-            document.getElementById('mobile-game-title').innerHTML = `${config.type==='bingo'?'BINGO':'LOTERÍA'} <span class="${config.titleClass}">${config.title}</span>`;
+            const prefix = config.type === 'bingo' ? 'BINGO' : (config.type === 'bingo_100' ? 'BINGO' : 'LOTERÍA');
+            document.getElementById('header-game-title').innerHTML = `${prefix} <span class="${config.titleClass}">${config.title}</span>`;
+            document.getElementById('mobile-game-title').innerHTML = `${prefix} <span class="${config.titleClass}">${config.title}</span>`;
             
             document.getElementById('view-menu').classList.add('hidden'); document.getElementById('view-menu').classList.remove('flex');
             document.getElementById('view-game').classList.remove('hidden'); document.getElementById('view-game').classList.add('flex');
             ['btn-exit','header-tabs','header-game-title-container'].forEach(id => document.getElementById(id).classList.remove('hidden'));
             setTimeout(() => document.getElementById('header-game-title-container').classList.remove('opacity-0'), 50);
-
-            switchTab('play');
-            shuffleDeck();
-            initParticipantsGrid();
+            
+            switchTab('play'); shuffleDeck(); initParticipantsGrid();
         }
 
         function switchTab(tab) {
             const tabs = { play: { area: 'area-play', btn: 'tab-play' }, list: { area: 'area-list', btn: 'tab-list' } };
             const color = gameState.config[gameState.currentGame].themeColor;
-            
             Object.keys(tabs).forEach(k => {
-                const isActive = k === tab;
-                const elArea = document.getElementById(tabs[k].area);
-                const elBtn = document.getElementById(tabs[k].btn);
-                
-                if (isActive) {
-                    elArea.classList.remove('hidden'); elArea.classList.add('flex');
-                    elBtn.className = "active-tab px-3 md:px-4 py-2 font-orbitron font-bold text-xs md:text-sm tracking-widest transition-all flex items-center gap-2 rounded";
-                    elBtn.style.color = color; elBtn.style.borderColor = color; elBtn.style.background = "rgba(255,255,255,0.05)";
-                } else {
-                    elArea.classList.add('hidden'); elArea.classList.remove('flex');
-                    elBtn.className = "inactive-tab px-3 md:px-4 py-2 font-orbitron font-bold text-xs md:text-sm tracking-widest transition-all flex items-center gap-2 rounded hover:bg-white/5";
-                    elBtn.style = "";
-                }
+                const isActive = k === tab; const elArea = document.getElementById(tabs[k].area); const elBtn = document.getElementById(tabs[k].btn);
+                if (isActive) { elArea.classList.remove('hidden'); elArea.classList.add('flex'); elBtn.className = "active-tab px-3 md:px-4 py-2 font-orbitron font-bold text-xs md:text-sm tracking-widest transition-all flex items-center gap-2 rounded hover:bg-white/5"; elBtn.style.color = color; elBtn.style.borderColor = color; elBtn.style.background = "rgba(255,255,255,0.05)"; }
+                else { elArea.classList.add('hidden'); elArea.classList.remove('flex'); elBtn.className = "inactive-tab px-3 md:px-4 py-2 font-orbitron font-bold text-xs md:text-sm tracking-widest transition-all flex items-center gap-2 rounded hover:bg-white/5"; elBtn.style = ""; }
             });
             if (tab === 'list') updateParticipantsVisuals();
         }
 
-        // LAYOUT MANAGER
         function updateLayout() {
-            const leftPanel = document.getElementById('left-panel');
-            const rightPanel = document.getElementById('right-panel');
-            const chatPanel = document.getElementById('chat-panel');
-            const isChatOpen = !chatPanel.classList.contains('hidden');
-            const isHistoryVisible = gameState.isHistoryVisible;
-            const overlay = document.getElementById('show-history-overlay');
-
+            const leftPanel = document.getElementById('left-panel'); const rightPanel = document.getElementById('right-panel'); const chatPanel = document.getElementById('chat-panel'); const isChatOpen = !chatPanel.classList.contains('hidden'); const overlay = document.getElementById('show-history-overlay');
             if (isChatOpen) {
-                if (isHistoryVisible) {
-                    // TRI-PANEL MODE
-                    leftPanel.className = "w-full md:w-[40%] flex-none flex flex-col gap-3 h-full transition-all duration-300";
-                    rightPanel.className = "w-full md:w-[30%] flex-none flex flex-col h-full overflow-hidden transition-all duration-300";
-                    rightPanel.classList.remove('hidden');
-                    overlay.classList.add('hidden'); // Ocultar boton de mostrar
-                    chatPanel.className = "w-full md:w-[30%] flex-none flex flex-col h-full overflow-hidden transition-all duration-300";
+                if (gameState.isHistoryVisible) {
+                    leftPanel.className = "w-full md:w-[30%] flex-none flex flex-col gap-3 h-full transition-all duration-300";
+                    rightPanel.className = "w-full md:w-[25%] flex-none flex flex-col h-full overflow-hidden transition-all duration-300"; rightPanel.classList.remove('hidden'); overlay.classList.add('hidden');
+                    chatPanel.className = "w-full md:w-[45%] flex-none flex flex-col h-full overflow-hidden transition-all duration-300";
                 } else {
-                    // CHAT EXPANDED MODE (History collapsed)
-                    leftPanel.className = "w-full md:w-[40%] flex-none flex flex-col gap-3 h-full transition-all duration-300";
-                    // Mantener rightPanel en DOM pero pequeño o mostrar botón para reabrir
-                    rightPanel.className = "w-12 flex-none flex flex-col h-full overflow-hidden transition-all duration-300 relative";
-                    overlay.classList.remove('hidden'); // Mostrar boton de mostrar
+                    leftPanel.className = "w-full md:w-[30%] flex-none flex flex-col gap-3 h-full transition-all duration-300";
+                    rightPanel.className = "w-8 flex-none flex flex-col h-full overflow-hidden transition-all duration-300 relative"; overlay.classList.remove('hidden');
                     chatPanel.className = "flex-grow flex flex-col h-full overflow-hidden transition-all duration-300";
                 }
             } else {
-                // NORMAL MODE
                 leftPanel.className = "w-full md:w-[60%] flex-none flex flex-col gap-3 h-full transition-all duration-300";
-                rightPanel.className = "flex-grow flex flex-col h-full overflow-hidden transition-all duration-300";
-                rightPanel.classList.remove('hidden');
-                overlay.classList.add('hidden');
+                rightPanel.className = "flex-grow flex flex-col h-full overflow-hidden transition-all duration-300"; rightPanel.classList.remove('hidden'); overlay.classList.add('hidden');
                 chatPanel.classList.add('hidden');
             }
             setTimeout(renderBoard, 305);
@@ -437,142 +332,69 @@
         function toggleHistory() {
             gameState.isHistoryVisible = !gameState.isHistoryVisible;
             const icon = document.getElementById('icon-eye');
-            if (gameState.isHistoryVisible) {
-                icon.classList.remove('fa-eye-slash'); icon.classList.add('fa-eye');
-            } else {
-                icon.classList.remove('fa-eye'); icon.classList.add('fa-eye-slash');
-            }
+            if (gameState.isHistoryVisible) { icon.classList.remove('fa-eye-slash'); icon.classList.add('fa-eye'); } else { icon.classList.remove('fa-eye'); icon.classList.add('fa-eye-slash'); }
             updateLayout();
         }
 
         function toggleChat() {
-            const chatPanel = document.getElementById('chat-panel');
-            const btnChat = document.getElementById('btn-chat');
-            const container = document.getElementById('chat-frame-container');
-            
+            const chatPanel = document.getElementById('chat-panel'); const btnChat = document.getElementById('btn-chat'); const container = document.getElementById('chat-frame-container');
             if (chatPanel.classList.contains('hidden')) {
-                // OPEN
-                if (!gameState.chatName) {
-                    const name = prompt("Ingresa el nombre del XAT:", "");
-                    if (!name) return;
-                    gameState.chatName = name;
-                    container.innerHTML = `<iframe src="https://xat.com/${name}" width="100%" height="100%" allowTransparency="true" frameborder="0" scrolling="no"></iframe>`;
-                }
-                chatPanel.classList.remove('hidden');
-                btnChat.classList.replace('bg-blue-600', 'bg-red-600');
-                btnChat.classList.replace('hover:bg-blue-500', 'hover:bg-red-500');
-                btnChat.innerHTML = '<i class="fa-solid fa-times"></i> CERRAR XAT';
+                if (!gameState.chatName) { const name = prompt("Ingresa el nombre del XAT:", ""); if (!name) return; gameState.chatName = name; container.innerHTML = `<iframe src="https://xat.com/${name}" width="100%" height="100%" allowTransparency="true" frameborder="0" scrolling="no"></iframe>`; }
+                chatPanel.classList.remove('hidden'); btnChat.classList.replace('bg-blue-600', 'bg-red-600'); btnChat.classList.replace('hover:bg-blue-500', 'hover:bg-red-500'); btnChat.innerHTML = '<i class="fa-solid fa-times"></i> CERRAR XAT';
             } else {
-                // CLOSE
-                chatPanel.classList.add('hidden');
-                btnChat.classList.replace('bg-red-600', 'bg-blue-600');
-                btnChat.classList.replace('hover:bg-red-500', 'hover:bg-blue-500');
-                btnChat.innerHTML = '<i class="fa-regular fa-comments"></i> VER XAT';
-                
-                // Force history visible if chat closes
-                gameState.isHistoryVisible = true;
-                const icon = document.getElementById('icon-eye');
-                icon.classList.remove('fa-eye-slash'); icon.classList.add('fa-eye');
+                chatPanel.classList.add('hidden'); btnChat.classList.replace('bg-red-600', 'bg-blue-600'); btnChat.classList.replace('hover:bg-red-500', 'hover:bg-blue-500'); btnChat.innerHTML = '<i class="fa-regular fa-comments"></i> VER XAT';
+                gameState.isHistoryVisible = true; document.getElementById('icon-eye').classList.remove('fa-eye-slash'); document.getElementById('icon-eye').classList.add('fa-eye');
             }
             updateLayout();
         }
+        function closeChat() { const chatPanel = document.getElementById('chat-panel'); if(!chatPanel.classList.contains('hidden')) toggleChat(); }
 
-        // GAME LOGIC
-        function shuffleDeck() {
-            stopAuto();
-            const config = gameState.config[gameState.currentGame];
-            gameState.deck = [...config.deckData].sort(() => Math.random() - 0.5);
-            gameState.drawn = [];
-            updateUI();
-            resetCardDisplay();
-            renderBoard();
-            updateParticipantsVisuals();
-        }
-
-        function drawCard() {
-            if (gameState.deck.length === 0) { stopAuto(); alert("¡Juego terminado!"); return; }
-            const card = gameState.deck.pop();
-            gameState.drawn.unshift(card);
-            renderCard(card);
-            updateUI();
-            if (gameState.isAutoCopy) copyCardToClipboard(card.name);
-        }
-
-        async function copyCardToClipboard(name) {
-            const config = gameState.config[gameState.currentGame];
-            const text = config.copyFormat.replace('{NAME}', name.toUpperCase());
-            try {
-                await navigator.clipboard.writeText(text);
-                showCopyFeedback();
-            } catch (err) {
-                console.error("Failed copy", err);
-            }
-        }
-
-        function showCopyFeedback() {
-            const feedback = document.getElementById('copy-feedback');
-            if(feedback) {
-                feedback.classList.remove('opacity-0', 'translate-y-2');
-                setTimeout(() => feedback.classList.add('opacity-0', 'translate-y-2'), 1500);
-            }
-        }
-
-        function toggleAutoCopy() {
-            gameState.isAutoCopy = document.getElementById('autocopy-toggle').checked;
-        }
+        function shuffleDeck() { stopAuto(); const config = gameState.config[gameState.currentGame]; gameState.deck = [...config.deckData].sort(() => Math.random() - 0.5); gameState.drawn = []; updateUI(); resetCardDisplay(); renderBoard(); updateParticipantsVisuals(); }
+        function drawCard() { if (gameState.deck.length === 0) { stopAuto(); alert("¡Juego terminado!"); return; } const card = gameState.deck.pop(); gameState.drawn.unshift(card); renderCard(card); updateUI(); if (gameState.isAutoCopy) copyCardToClipboard(card.name); }
+        async function copyCardToClipboard(name) { const config = gameState.config[gameState.currentGame]; const text = config.copyFormat.replace('{NAME}', name.toUpperCase()); try { await navigator.clipboard.writeText(text); showCopyFeedback(); } catch (err) { console.error("Copy failed", err); } }
+        function showCopyFeedback() { const feedback = document.getElementById('copy-feedback'); if(feedback) { feedback.classList.remove('opacity-0', 'translate-y-2'); setTimeout(() => feedback.classList.add('opacity-0', 'translate-y-2'), 1500); } }
+        function toggleAutoCopy() { gameState.isAutoCopy = document.getElementById('autocopy-toggle').checked; }
 
         function renderCard(card) {
-            const container = document.getElementById('card-display');
-            const config = gameState.config[gameState.currentGame];
-            const headerLine = document.getElementById('card-header-line');
-            headerLine.className = `absolute top-0 w-full h-1 ${config.flagClass}`;
+            const container = document.getElementById('card-display'); const config = gameState.config[gameState.currentGame]; const headerLine = document.getElementById('card-header-line'); headerLine.className = `absolute top-0 w-full h-1 ${config.flagClass}`;
+            const len = card.name.length; let size = "text-5xl md:text-7xl"; if (len > 18) size = "text-xl md:text-3xl"; else if (len > 14) size = "text-2xl md:text-4xl"; else if (len > 8) size = "text-3xl md:text-5xl";
+            
+            // Hide giant number/letter for bingos
+            const showTopLabel = config.type !== 'bingo' && config.type !== 'bingo_100';
+            const topLabelHTML = showTopLabel ? `<div class="absolute top-4 left-0 w-full text-center z-10"><span class="block text-white/50 font-rajdhani text-xl tracking-widest">#${card.id}</span></div>` : '';
 
-            const len = card.name.length;
-            let size = "text-5xl md:text-7xl";
-            if (len > 18) size = "text-xl md:text-3xl"; 
-            else if (len > 14) size = "text-2xl md:text-4xl";
-            else if (len > 8) size = "text-3xl md:text-5xl";
-
-            container.innerHTML = `
-                <div class="animate-fade-in flex flex-col items-center justify-between h-full w-full relative px-4 py-6 overflow-hidden">
-                    <div class="absolute top-4 left-0 w-full text-center z-10"><span class="block text-white/50 font-rajdhani text-xl tracking-widest">${config.type === 'bingo' ? 'NÚMERO' : '#' + card.id}</span></div>
-                    <div class="flex-grow flex items-center justify-center w-full"><div class="text-center transform transition hover:scale-110 duration-500"><i class="fa-solid ${config.icon} text-8xl md:text-9xl lg:text-[10rem] text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.3)] animate-pulse"></i></div></div>
-                    <div class="w-full flex flex-col items-center gap-6 z-20 mt-4">
-                        <h2 class="font-orbitron font-black ${size} uppercase tracking-widest text-white drop-shadow-[0_0_15px_rgba(0,0,0,0.8)] leading-none whitespace-nowrap overflow-visible">${card.name}</h2>
-                        <button onclick="copyCardToClipboard('${card.name}')" class="flex items-center gap-3 px-6 py-2 bg-white/10 hover:bg-white/20 rounded-full border border-white/20 text-sm font-orbitron transition-all active:scale-95 group shadow-lg hover:shadow-neon"><i class="fa-regular fa-copy text-neon-blue group-hover:text-white"></i> COPIAR</button>
-                    </div>
-                    <div id="copy-feedback" class="absolute bottom-20 bg-green-500 text-white text-xs px-3 py-1 rounded opacity-0 translate-y-2 transition-all duration-300 pointer-events-none">¡Copiado!</div>
-                    <div class="absolute bottom-0 left-0 right-0 h-2 ${config.flagClass} opacity-80 blur-sm"></div>
-                </div>
-            `;
+            container.innerHTML = `<div class="animate-fade-in flex flex-col items-center justify-between h-full w-full relative px-4 py-6 overflow-hidden">${topLabelHTML}<div class="flex-grow flex items-center justify-center w-full"><div class="text-center transform transition hover:scale-110 duration-500"><i class="fa-solid ${config.icon} text-8xl md:text-9xl lg:text-[10rem] text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.3)] animate-pulse"></i></div></div><div class="w-full flex flex-col items-center gap-6 z-20 mt-4"><h2 class="font-orbitron font-black ${size} uppercase tracking-widest text-white drop-shadow-[0_0_15px_rgba(0,0,0,0.8)] leading-none whitespace-nowrap overflow-visible">${card.name}</h2><button onclick="copyCardToClipboard('${card.name}')" class="flex items-center gap-3 px-6 py-2 bg-white/10 hover:bg-white/20 rounded-full border border-white/20 text-sm font-orbitron transition-all active:scale-95 group shadow-lg hover:shadow-neon"><i class="fa-regular fa-copy text-neon-blue group-hover:text-white"></i> COPIAR</button></div><div id="copy-feedback" class="absolute bottom-20 bg-green-500 text-white text-xs px-3 py-1 rounded opacity-0 translate-y-2 transition-all duration-300 pointer-events-none">¡Copiado!</div><div class="absolute bottom-0 left-0 right-0 h-2 ${config.flagClass} opacity-80 blur-sm"></div></div>`;
             document.getElementById('last-card-name').innerText = card.name.toUpperCase();
         }
+        function resetCardDisplay() { document.getElementById('card-display').innerHTML = `<div class="flex flex-col items-center justify-center text-center space-y-4 opacity-40"><i class="fa-solid fa-box-open text-5xl text-gray-500"></i><p class="font-orbitron text-lg tracking-widest">LISTO</p></div>`; document.getElementById('last-card-name').innerText = "-"; document.getElementById('card-header-line').className = "absolute top-0 w-full h-1 bg-white/10"; }
 
-        function resetCardDisplay() {
-            document.getElementById('card-display').innerHTML = `<div class="flex flex-col items-center justify-center text-center space-y-4 opacity-40"><i class="fa-solid fa-box-open text-5xl text-gray-500"></i><p class="font-orbitron text-lg tracking-widest">LISTO</p></div>`;
-            document.getElementById('last-card-name').innerText = "-";
-            document.getElementById('card-header-line').className = "absolute top-0 w-full h-1 bg-white/10";
-        }
-
-        // BOARD
         function renderBoard() {
-            const container = document.getElementById('board-container');
-            const config = gameState.config[gameState.currentGame];
-            const title = document.getElementById('board-title');
-            const isTriPanel = !document.getElementById('chat-panel').classList.contains('hidden') && gameState.isHistoryVisible;
+            const container = document.getElementById('board-container'); const config = gameState.config[gameState.currentGame]; const title = document.getElementById('board-title');
+            const isChatOpen = !document.getElementById('chat-panel').classList.contains('hidden');
+            const isHistoryVisible = gameState.isHistoryVisible;
+            
+            // Adjust title with toggle button
+            title.innerHTML = `${config.type.startsWith('bingo') ? '<i class="fa-solid fa-border-all"></i> TABLERO' : '<i class="fa-solid fa-list-check"></i> HISTORIAL'} <button onclick="toggleHistory()" class="ml-2 text-neon-blue hover:text-white transition-colors"><i class="fa-regular ${isHistoryVisible ? 'fa-eye' : 'fa-eye-slash'}" id="icon-eye"></i></button>`;
 
             if (config.type === 'bingo') {
-                title.innerHTML = `<i class="fa-solid fa-border-all"></i> TABLERO 1-90 <button onclick="toggleHistory()" class="ml-2 text-neon-blue hover:text-white transition-colors" title="Ocultar/Mostrar"><i class="fa-regular ${gameState.isHistoryVisible ? 'fa-eye' : 'fa-eye-slash'}" id="icon-eye"></i></button>`;
+                // Bingo 90
                 const cells = Array.from({length: 90}, (_, i) => {
-                    const num = i + 1;
-                    const isDrawn = gameState.drawn.some(c => c.id === num);
-                    const activeClass = isDrawn ? `bg-[${config.themeColor}] text-black font-black shadow-[0_0_5px_${config.themeColor}] scale-105 z-10` : 'bg-white/5 text-gray-600';
+                    const num = i + 1; const isDrawn = gameState.drawn.some(c => c.id === num); const activeClass = isDrawn ? `bg-[${config.themeColor}] text-black font-black shadow-[0_0_5px_${config.themeColor}] scale-105 z-10` : 'bg-white/5 text-gray-600';
                     return `<div id="board-cell-${num}" class="flex items-center justify-center rounded-[1px] border border-white/5 text-[9px] md:text-[10px] font-black font-orbitron transition-all duration-200 ${activeClass}">${num.toString().padStart(2,'0')}</div>`;
                 }).join('');
                 container.innerHTML = `<div class="flex gap-2 w-full h-full"><div class="flex-grow grid grid-cols-10 grid-rows-9 gap-px w-[70%]">${cells}</div><div class="w-[30%] border-l border-white/10 pl-2 flex flex-col"><h4 class="text-[10px] font-rajdhani text-neon-purple mb-1 text-center font-bold tracking-wider">GANADORES</h4><div id="bingo-winners-list" class="flex-grow grid grid-cols-3 gap-1 content-start"></div></div></div>`;
                 updateBingoWinners();
+            } else if (config.type === 'bingo_100') {
+                // Bingo 100
+                const cells = Array.from({length: 100}, (_, i) => {
+                    const num = i + 1; const isDrawn = gameState.drawn.some(c => c.id === num); const activeClass = isDrawn ? `bg-[${config.themeColor}] text-black font-black shadow-[0_0_5px_${config.themeColor}] scale-105 z-10` : 'bg-white/5 text-gray-600';
+                    return `<div id="board-cell-${num}" class="flex items-center justify-center rounded-[1px] border border-white/5 text-[9px] md:text-[10px] font-black font-orbitron transition-all duration-200 ${activeClass}">${num.toString().padStart(2,'0')}</div>`;
+                }).join('');
+                // 10x10 Grid for 100 numbers
+                container.innerHTML = `<div class="grid grid-cols-10 grid-rows-10 gap-px w-full h-full p-1">${cells}</div>`;
             } else {
-                title.innerHTML = `<i class="fa-solid fa-list-check"></i> HISTORIAL <button onclick="toggleHistory()" class="ml-2 text-neon-blue hover:text-white transition-colors" title="Ocultar/Mostrar"><i class="fa-regular ${gameState.isHistoryVisible ? 'fa-eye' : 'fa-eye-slash'}" id="icon-eye"></i></button>`;
+                // Loteria
+                const isTriPanel = isChatOpen && isHistoryVisible;
                 const gridCols = isTriPanel ? 'grid-cols-2 lg:grid-cols-3' : 'grid-cols-3 md:grid-cols-4 lg:grid-cols-5';
                 container.innerHTML = `<div id="history-grid" class="grid ${gridCols} auto-rows-min gap-2 overflow-y-auto custom-scroll pr-1 h-full content-start"></div>`;
                 if(gameState.drawn.length > 0) updateUI();
@@ -580,46 +402,25 @@
         }
 
         function updateUI() {
-            document.getElementById('count-rem').innerText = gameState.deck.length;
-            document.getElementById('count-drawn').innerText = gameState.drawn.length;
-            const config = gameState.config[gameState.currentGame];
-
-            if (config.type === 'bingo') {
-                if(gameState.drawn.length > 0) {
-                    const last = gameState.drawn[0];
-                    const cell = document.getElementById(`board-cell-${last.id}`);
-                    if(cell) cell.className = `flex items-center justify-center rounded-[1px] border border-white/5 text-[9px] md:text-[10px] font-black font-orbitron transition-all duration-200 bg-[${config.themeColor}] text-black shadow-[0_0_5px_${config.themeColor}] z-10 scale-105`;
-                    updateBingoWinners();
+            document.getElementById('count-rem').innerText = gameState.deck.length; document.getElementById('count-drawn').innerText = gameState.drawn.length; const config = gameState.config[gameState.currentGame];
+            if (config.type.startsWith('bingo')) {
+                if(gameState.drawn.length > 0) { 
+                    const last = gameState.drawn[0]; const cell = document.getElementById(`board-cell-${last.id}`); 
+                    if(cell) cell.className = `flex items-center justify-center rounded-[1px] border border-white/5 text-[9px] md:text-[10px] font-black font-orbitron transition-all duration-200 bg-[${config.themeColor}] text-black shadow-[0_0_5px_${config.themeColor}] z-10 scale-105`; 
+                    if(config.type === 'bingo') updateBingoWinners(); 
                 } else { renderBoard(); }
             } else {
-                const grid = document.getElementById('history-grid');
-                if(grid) {
-                    grid.innerHTML = gameState.drawn.map(card => `
-                        <div class="animate-fade-in bg-dark-surface border border-white/10 rounded p-1 flex items-center justify-center text-center hover:bg-white/5 group shadow-sm transition-all relative overflow-hidden">
-                            <span class="font-rajdhani font-bold text-[10px] md:text-xs text-gray-200 uppercase tracking-wide truncate w-full relative z-10" title="${card.name}">${card.name}</span>
-                            <div class="absolute inset-0 opacity-0 group-hover:opacity-10 bg-[${config.themeColor}] transition-opacity"></div>
-                        </div>
-                    `).join('');
-                }
+                const grid = document.getElementById('history-grid'); if(grid) { grid.innerHTML = gameState.drawn.map(card => `<div class="animate-fade-in bg-dark-surface border border-white/10 rounded p-1 flex items-center justify-center text-center hover:bg-white/5 group shadow-sm transition-all relative overflow-hidden"><span class="font-rajdhani font-bold text-[10px] md:text-xs text-gray-200 uppercase tracking-wide truncate w-full relative z-10 leading-tight" title="${card.name}">${card.name}</span><div class="absolute inset-0 opacity-0 group-hover:opacity-10 bg-[${config.themeColor}] transition-opacity"></div></div>`).join(''); }
             }
             
-            const btnManual = document.getElementById('btn-manual');
-            const btnAuto = document.getElementById('btn-auto');
-            if(gameState.isAuto) {
-                btnManual.classList.add('opacity-50', 'cursor-not-allowed'); btnManual.disabled = true;
-                btnAuto.classList.add('border-white', 'text-white', 'bg-white/20'); btnAuto.innerHTML = '<i class="fa-solid fa-pause"></i> PAUSA';
-            } else {
-                btnManual.classList.remove('opacity-50', 'cursor-not-allowed'); btnManual.disabled = false;
-                btnAuto.classList.remove('border-white', 'text-white', 'bg-white/20'); btnAuto.innerHTML = '<i class="fa-solid fa-play"></i> AUTO';
-            }
+            const btnManual = document.getElementById('btn-manual'); const btnAuto = document.getElementById('btn-auto');
+            if(gameState.isAuto) { btnManual.classList.add('opacity-50', 'cursor-not-allowed'); btnManual.disabled = true; btnAuto.classList.add('border-white', 'text-white', 'bg-white/20'); btnAuto.innerHTML = '<i class="fa-solid fa-pause"></i> PAUSA'; } 
+            else { btnManual.classList.remove('opacity-50', 'cursor-not-allowed'); btnManual.disabled = false; btnAuto.classList.remove('border-white', 'text-white', 'bg-white/20'); btnAuto.innerHTML = '<i class="fa-solid fa-play"></i> AUTO'; }
             updateParticipantsVisuals();
         }
 
         function updateBingoWinners() {
-            const list = document.getElementById('bingo-winners-list');
-            if (!list) return;
-            const config = gameState.config.bingo;
-            const drawnIds = new Set(gameState.drawn.map(c => c.id));
+            const list = document.getElementById('bingo-winners-list'); if (!list) return; const config = gameState.config.bingo; const drawnIds = new Set(gameState.drawn.map(c => c.id));
             const winners = config.participantsData.filter(combo => drawnIds.has(combo.n1) && drawnIds.has(combo.n2));
             list.innerHTML = winners.map(w => `<div class="animate-pop bg-neon-purple/20 border border-neon-purple/50 rounded-[2px] p-0.5 text-center flex items-center justify-center h-full"><span class="font-orbitron font-bold text-[9px] text-white leading-none">${w.name}</span></div>`).join('');
         }
@@ -631,20 +432,63 @@
         function updateSpeed() { if (gameState.isAuto) { stopAuto(); startAuto(); } }
         function resetGame() { const wasAuto = gameState.isAuto; if (wasAuto) stopAuto(); setTimeout(() => { if (confirm("¿Seguro que quieres REINICIAR el juego?")) { shuffleDeck(); } else if(wasAuto) {} }, 50); }
         function initParticipantsGrid() {
-            const grid = document.getElementById('participants-grid'); grid.innerHTML = ''; 
-            const config = gameState.config[gameState.currentGame];
+            const grid = document.getElementById('participants-grid'); grid.innerHTML = ''; const config = gameState.config[gameState.currentGame]; 
             const isBingo = config.type === 'bingo';
-            grid.className = isBingo ? "flex-grow grid grid-cols-5 grid-rows-9 gap-1 p-2 bg-dark-surface/50 rounded-xl border border-white/5 backdrop-blur-sm shadow-inner overflow-hidden" : "flex-grow grid grid-cols-5 md:grid-cols-6 lg:grid-cols-8 grid-rows-10 gap-x-2 gap-y-1 p-3 bg-dark-surface/50 rounded-xl border border-white/5 backdrop-blur-sm shadow-inner overflow-y-auto custom-scroll content-start";
+            const isBingo100 = config.type === 'bingo_100';
+            
+            // Adjust Grid for Bingo 100 (needs more cells) or others
+            if (isBingo) {
+                grid.className = "flex-grow grid grid-cols-5 grid-rows-9 gap-1 p-2 bg-dark-surface/50 rounded-xl border border-white/5 backdrop-blur-sm shadow-inner overflow-hidden";
+            } else if (isBingo100) {
+                // 100 cells fits best in 10x10 or similar dense grid with scroll if needed, but requested no scroll.
+                // 10x10 might be too small text for names, but for numbers is fine.
+                // Assuming Bingo 100 participants list is just numbers 1-100? Or names? 
+                // The prompt implied "listado de números debe venir individual", similar to "anotar personas".
+                // Let's use a dense grid 10x10.
+                grid.className = "flex-grow grid grid-cols-10 grid-rows-10 gap-1 p-2 bg-dark-surface/50 rounded-xl border border-white/5 backdrop-blur-sm shadow-inner overflow-hidden";
+            } else if (config.type === 'loteria' && config.participantsData.length === 104) {
+                // Silabas (104 items) = 8x13 Grid
+                grid.className = "flex-grow grid grid-cols-8 grid-rows-[13] gap-1 p-2 bg-dark-surface/50 rounded-xl border border-white/5 backdrop-blur-sm shadow-inner overflow-hidden";
+            } else if (config.type === 'loteria' && config.participantsData.length === 54) {
+                // Mexicana (54 items) = 6x9 Grid
+                grid.className = "flex-grow grid grid-cols-6 grid-rows-9 gap-1 p-2 bg-dark-surface/50 rounded-xl border border-white/5 backdrop-blur-sm shadow-inner overflow-hidden";
+            } else {
+                // CV (50 items) = 5x10 Grid (or adaptable)
+                grid.className = "flex-grow grid grid-cols-5 grid-rows-10 gap-1 p-2 bg-dark-surface/50 rounded-xl border border-white/5 backdrop-blur-sm shadow-inner overflow-hidden";
+            }
+
             config.participantsData.forEach(item => {
                 const cell = document.createElement('div'); cell.id = `p-cell-${item.id}`; 
                 cell.className = `relative bg-dark-card/60 border border-white/5 rounded-[3px] p-1 flex flex-col justify-center transition-all duration-500 hover:border-white/20 group overflow-hidden w-full h-full`;
                 const val = gameState.participants[item.id] || '';
-                cell.innerHTML = `<div class="flex items-center justify-between w-full mb-0.5 leading-none"><span class="text-[9px] lg:text-[10px] font-bold text-gray-500 group-hover:text-white transition-colors uppercase truncate flex-grow" title="${item.name}">${item.name}</span></div><input type="text" class="participant-input dense-input text-[10px] md:text-xs" data-id="${item.id}" value="${val}" oninput="saveInput('${item.id}', this.value)" autocomplete="off"><div id="marker-${item.id}" class="absolute inset-0 bg-neon-green/10 border border-neon-green hidden pointer-events-none shadow-[inset_0_0_10px_rgba(0,255,157,0.2)]"></div>`;
+                
+                // For Bingo 100, item.name is "01", "02", etc.
+                cell.innerHTML = `<div class="flex items-center justify-between w-full mb-0.5 leading-none"><span class="text-[8px] lg:text-[10px] font-bold text-gray-500 group-hover:text-white transition-colors uppercase truncate flex-grow" title="${item.name}">${item.name}</span></div><input type="text" class="participant-input dense-input text-[10px] md:text-xs" data-id="${item.id}" value="${val}" oninput="saveInput('${item.id}', this.value)" autocomplete="off"><div id="marker-${item.id}" class="absolute inset-0 bg-neon-green/10 border border-neon-green hidden pointer-events-none shadow-[inset_0_0_10px_rgba(0,255,157,0.2)]"></div>`;
                 grid.appendChild(cell);
             });
         }
         function saveInput(id, val) { const config = gameState.config[gameState.currentGame]; gameState.participants[id] = val; localStorage.setItem(config.storageKey, JSON.stringify(gameState.participants)); }
-        function updateParticipantsVisuals() { document.querySelectorAll('[id^="marker-"]').forEach(el => el.classList.add('hidden')); const config = gameState.config[gameState.currentGame]; const isBingo = config.type === 'bingo'; const drawnIds = new Set(gameState.drawn.map(c => c.id)); config.participantsData.forEach(item => { let won = false; if (isBingo) { if (drawnIds.has(item.n1) && drawnIds.has(item.n2)) won = true; } else { if (drawnIds.has(item.id)) won = true; } if (won) { const marker = document.getElementById(`marker-${item.id}`); const cell = document.getElementById(`p-cell-${item.id}`); if (marker) marker.classList.remove('hidden'); if (cell) { const input = cell.querySelector('input'); if(input) input.classList.add('text-neon-green', 'font-bold'); } } }); }
+        function updateParticipantsVisuals() { 
+            document.querySelectorAll('[id^="marker-"]').forEach(el => el.classList.add('hidden')); 
+            const config = gameState.config[gameState.currentGame]; 
+            const drawnIds = new Set(gameState.drawn.map(c => c.id)); 
+            
+            config.participantsData.forEach(item => { 
+                let won = false; 
+                if (config.type === 'bingo') { 
+                    if (drawnIds.has(item.n1) && drawnIds.has(item.n2)) won = true; 
+                } else { 
+                    // Loteria & Bingo 100 (Single match)
+                    if (drawnIds.has(item.id)) won = true; 
+                } 
+                if (won) { 
+                    const marker = document.getElementById(`marker-${item.id}`); 
+                    const cell = document.getElementById(`p-cell-${item.id}`); 
+                    if (marker) marker.classList.remove('hidden'); 
+                    if (cell) { const input = cell.querySelector('input'); if(input) input.classList.add('text-neon-green', 'font-bold'); } 
+                } 
+            }); 
+        }
         function clearParticipants() { if (confirm("¿Borrar TODOS los nombres de la tabla?")) { const config = gameState.config[gameState.currentGame]; gameState.participants = {}; localStorage.setItem(config.storageKey, JSON.stringify(gameState.participants)); const inputs = document.querySelectorAll('.participant-input'); inputs.forEach(i => { i.value = ''; i.classList.remove('text-neon-green', 'font-bold'); }); } }
         setInterval(() => { const now = new Date(); const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}); const gameClock = document.getElementById('game-clock'); if(gameClock) gameClock.innerText = timeString; }, 1000);
     </script>
